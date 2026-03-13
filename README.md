@@ -34,7 +34,7 @@ Built for: QA engineers, SDETs, instructors, and developers learning GenAI testi
 
 ```bash
 git clone <repo-url>
-cd pay-flow
+cd pay-flow-assistant
 
 # Create and activate a virtual environment
 python -m venv venv
