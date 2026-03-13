@@ -38,13 +38,13 @@ cd pay-flow
 
 # Create and activate a virtual environment
 python -m venv venv
-.venv/Scripts/activate        # Windows
-# source .venv/bin/activate   # macOS / Linux
+venv/Scripts/activate        # Windows
+# source venv/bin/activate   # macOS / Linux
 
 pip install -r requirements.txt
 ```
 
-> **Always run the server from the `.venv`** — the `anthropic` package is installed there, not in your global Python.
+> **Always run the server from the `venv`** — the `anthropic` package is installed there, not in your global Python.
 
 ### 2. Configure environment
 
@@ -186,10 +186,10 @@ Try these to explore different routing paths. The full list is at `/questions` i
 
 ```bash
 # From the project root with the venv active
-.venv/Scripts/python -m pytest tests/ -v
+venv/Scripts/python -m pytest tests/ -v
 ```
 
-> Run tests via `.venv/Scripts/python -m pytest` rather than plain `pytest` to avoid conflicts with globally installed packages (e.g. `deepeval` registers a broken pytest plugin in some environments).
+> Run tests via `venv/Scripts/python -m pytest` rather than plain `pytest` to avoid conflicts with globally installed packages (e.g. `deepeval` registers a broken pytest plugin in some environments).
 
 The test suite covers:
 
@@ -216,7 +216,7 @@ npm install -g promptfoo
 
 ```bash
 # Terminal 1 — start the server
-.venv/Scripts/uvicorn app.main:app --reload --port 8000
+venv/Scripts/uvicorn app.main:app --reload --port 8000
 
 # Terminal 2 — run evals
 cd promptfoo
@@ -391,9 +391,9 @@ Replace `get_store().jira` in `jira_specialist.py` with a real Jira API call. Th
 
 **`ModuleNotFoundError: No module named 'anthropic'` (LLM not working)**
 
-The server is running with the global Python instead of the `.venv`. Use:
+The server is running with the global Python instead of the `venv`. Use:
 ```bash
-.venv/Scripts/uvicorn app.main:app --reload --port 8000
+venv/Scripts/uvicorn app.main:app --reload --port 8000
 ```
 
 **LLM synthesis still using template after adding API key**
@@ -404,7 +404,7 @@ The `.env` file is loaded once at startup via `load_dotenv(override=True)`. Rest
 
 A globally installed package (e.g. `deepeval`) may be registering a broken pytest plugin. Use the venv directly:
 ```bash
-.venv/Scripts/python -m pytest tests/ -v
+venv/Scripts/python -m pytest tests/ -v
 ```
 
 **Promptfoo assertions fail with `Cannot read properties of undefined`**
