@@ -37,7 +37,7 @@ git clone <repo-url>
 cd pay-flow
 
 # Create and activate a virtual environment
-python -m venv .venv
+python -m venv venv
 .venv/Scripts/activate        # Windows
 # source .venv/bin/activate   # macOS / Linux
 
@@ -65,7 +65,7 @@ LLM_MODEL=claude-3-5-haiku-20241022
 ### 3. Start the FastAPI server
 
 ```bash
-.venv/Scripts/uvicorn app.main:app --reload --port 8000
+venv/Scripts/uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 On startup the server logs whether LLM synthesis is enabled:
