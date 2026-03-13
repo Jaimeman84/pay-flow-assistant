@@ -1,0 +1,180 @@
+{
+  "tickets": [
+    {
+      "id": "PF-101",
+      "title": "Login OTP screen not rendering on Android",
+      "status": "open",
+      "priority": "high",
+      "feature_area": "login",
+      "assignee": "Alex Chen",
+      "sprint": "Sprint 15",
+      "summary": "Users on Android 13 and 14 report the OTP verification screen fails to render after entering credentials. The screen appears blank with no input fields visible.",
+      "blockers": []
+    },
+    {
+      "id": "PF-102",
+      "title": "Biometric authentication fails silently after iOS update",
+      "status": "in-progress",
+      "priority": "critical",
+      "feature_area": "login",
+      "assignee": "Sofia Martinez",
+      "sprint": "Sprint 15",
+      "summary": "Users who updated to iOS 17.4 report that biometric login (Face ID and Touch ID) fails silently. The app does not redirect users to the PIN fallback. Biometric data re-registration does not resolve the issue.",
+      "blockers": []
+    },
+    {
+      "id": "PF-103",
+      "title": "Dashboard balance widget shows stale data",
+      "status": "open",
+      "priority": "medium",
+      "feature_area": "dashboard",
+      "assignee": "Jordan Lee",
+      "sprint": "Sprint 15",
+      "summary": "The balance widget on the dashboard does not refresh automatically. Users must manually pull-to-refresh to see their current balance. Auto-refresh polling interval is not firing after the first load.",
+      "blockers": []
+    },
+    {
+      "id": "PF-104",
+      "title": "Payment confirmation button unresponsive on iOS",
+      "status": "blocked",
+      "priority": "critical",
+      "feature_area": "payments",
+      "assignee": "Morgan Taylor",
+      "sprint": "Sprint 15",
+      "summary": "On iOS 16 and iOS 17, the confirm payment button does not respond to tap events on the payment confirmation screen. Affects 100% of iOS users attempting to complete a payment. This is a payment release blocker.",
+      "blockers": ["PF-098"]
+    },
+    {
+      "id": "PF-105",
+      "title": "Duplicate transaction created on network retry",
+      "status": "blocked",
+      "priority": "critical",
+      "feature_area": "payments",
+      "assignee": "Riley Park",
+      "sprint": "Sprint 15",
+      "summary": "When a payment request times out and the client retries, a duplicate transaction is sometimes created. Engineering is implementing idempotency keys to resolve this. This is a payment release blocker and cannot ship until resolved.",
+      "blockers": []
+    },
+    {
+      "id": "PF-106",
+      "title": "Payment history not loading for large accounts",
+      "status": "open",
+      "priority": "high",
+      "feature_area": "payments",
+      "assignee": "Alex Chen",
+      "sprint": "Sprint 15",
+      "summary": "Accounts with 500 or more transactions experience a timeout when loading payment history. The API response exceeds the 30-second threshold. Pagination fix is in progress.",
+      "blockers": []
+    },
+    {
+      "id": "PF-107",
+      "title": "Freeze card toggle state resets on page refresh",
+      "status": "open",
+      "priority": "high",
+      "feature_area": "cards",
+      "assignee": "Sofia Martinez",
+      "sprint": "Sprint 14",
+      "summary": "When a user activates the freeze card toggle, the UI updates correctly but resets to unfrozen after a page refresh. The backend state is updated correctly but the UI does not re-sync on component mount.",
+      "blockers": []
+    },
+    {
+      "id": "PF-108",
+      "title": "Report lost card confirmation email not sent",
+      "status": "blocked",
+      "priority": "high",
+      "feature_area": "cards",
+      "assignee": "Jordan Lee",
+      "sprint": "Sprint 14",
+      "summary": "After completing the report lost card flow, the confirmation email is not sent to the user. The email service integration returns HTTP 200 but the message is never delivered to the user's inbox.",
+      "blockers": ["PF-099"]
+    },
+    {
+      "id": "PF-109",
+      "title": "Transaction date filter returns incorrect results on weekends",
+      "status": "open",
+      "priority": "medium",
+      "feature_area": "transactions",
+      "assignee": "Morgan Taylor",
+      "sprint": "Sprint 15",
+      "summary": "The date range filter on the transaction history screen returns transactions outside the selected range when the start date falls on a weekend. Off-by-one error in the date boundary calculation.",
+      "blockers": []
+    },
+    {
+      "id": "PF-110",
+      "title": "Export to PDF fails for transactions older than 90 days",
+      "status": "open",
+      "priority": "low",
+      "feature_area": "transactions",
+      "assignee": "Riley Park",
+      "sprint": "Sprint 16",
+      "summary": "The export to PDF feature fails silently when the selected date range includes transactions older than 90 days. Users receive no error message. Root cause is a query timeout in the archive retrieval service.",
+      "blockers": []
+    },
+    {
+      "id": "PF-111",
+      "title": "Notification badge count does not reset after clearing",
+      "status": "open",
+      "priority": "low",
+      "feature_area": "dashboard",
+      "assignee": "Alex Chen",
+      "sprint": "Sprint 16",
+      "summary": "After a user clears all notifications, the badge count on the notification icon does not reset to zero immediately. The badge displays the stale count until the app is restarted.",
+      "blockers": []
+    },
+    {
+      "id": "PF-112",
+      "title": "Session token expires too quickly on mobile",
+      "status": "closed",
+      "priority": "medium",
+      "feature_area": "login",
+      "assignee": "Sofia Martinez",
+      "sprint": "Sprint 13",
+      "summary": "Mobile users were being logged out after 15 minutes of inactivity due to an overly aggressive token expiry setting. Fixed in Sprint 13 by extending the mobile session token TTL from 15 minutes to 60 minutes.",
+      "blockers": []
+    },
+    {
+      "id": "PF-113",
+      "title": "Payment release v2.4 blocked — critical iOS and duplicate transaction bugs",
+      "status": "blocked",
+      "priority": "critical",
+      "feature_area": "payments",
+      "assignee": "Morgan Taylor",
+      "sprint": "Sprint 15",
+      "summary": "The v2.4 payment release is blocked pending resolution of PF-104 (iOS confirmation button unresponsive) and PF-105 (duplicate transaction on network retry). The release cannot proceed until both blockers are resolved and a full regression pass is completed.",
+      "blockers": ["PF-104", "PF-105"]
+    },
+    {
+      "id": "PF-114",
+      "title": "Virtual card generation fails intermittently",
+      "status": "open",
+      "priority": "high",
+      "feature_area": "cards",
+      "assignee": "Jordan Lee",
+      "sprint": "Sprint 15",
+      "summary": "Virtual card generation via the card management screen fails approximately 20% of the time with error 'Card provider service timeout'. A retry mechanism with exponential backoff is being implemented.",
+      "blockers": []
+    },
+    {
+      "id": "PF-115",
+      "title": "Dashboard quick actions panel missing on tablet layout",
+      "status": "open",
+      "priority": "medium",
+      "feature_area": "dashboard",
+      "assignee": "Riley Park",
+      "sprint": "Sprint 16",
+      "summary": "The quick actions panel (Send Money, Request Money, Pay Bill) is not rendered on tablet-sized screens. The responsive layout breakpoint for tablet width is not defined in the design system tokens.",
+      "blockers": []
+    },
+    {
+      "id": "PF-116",
+      "title": "Login form inputs missing ARIA labels",
+      "status": "open",
+      "priority": "medium",
+      "feature_area": "login",
+      "assignee": "Alex Chen",
+      "sprint": "Sprint 16",
+      "summary": "The login form email and password input fields are missing ARIA labels and role attributes, causing accessibility failures in screen reader testing. Required for WCAG 2.1 AA compliance.",
+      "blockers": []
+    }
+  ]
+}

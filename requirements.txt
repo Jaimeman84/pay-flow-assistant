@@ -1,0 +1,24 @@
+# PayFlow GenAI Demo — Python dependencies
+#
+# Install all dependencies:
+#   pip install -r requirements.txt
+#
+# The app works without an LLM API key (uses template synthesis).
+# Add anthropic or openai only if you want LLM-powered answers.
+
+# ── Core framework ────────────────────────────────────────────────────────────
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.6.0
+python-dotenv>=1.0.0
+
+# ── LLM providers (install the one you plan to use) ───────────────────────────
+# For Anthropic Claude (default):
+anthropic>=0.25.0
+
+# For OpenAI (alternative — uncomment if using OpenAI):
+# openai>=1.0.0
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest>=8.0.0
+httpx>=0.27.0          # Required by FastAPI TestClient for async support

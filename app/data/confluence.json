@@ -1,0 +1,74 @@
+{
+  "pages": [
+    {
+      "id": "CF-001",
+      "title": "PayFlow Product Overview",
+      "feature_area": "general",
+      "type": "requirements",
+      "content": "PayFlow is a fintech application that enables individual consumers and small businesses to send payments, manage cards, and track transaction history from a unified mobile and web dashboard. Core features include secure login with biometric support, real-time payment processing, card management (freeze, report lost, virtual cards), and a full transaction history with filtering and export capabilities. PayFlow is built for simplicity and trust — users should be able to complete any financial action in under three taps."
+    },
+    {
+      "id": "CF-002",
+      "title": "Login Flow — Functional Requirements",
+      "feature_area": "login",
+      "type": "requirements",
+      "content": "The login flow must support email and password authentication and biometric authentication (Face ID, Touch ID, Fingerprint). OTP verification is required for new device registrations. Session tokens must expire after 60 minutes of inactivity on mobile and 30 minutes on web. Failed login attempts must be limited to 5 consecutive attempts before account lockout. The forgot password flow must send a reset link to the registered email within 60 seconds. All login events must be logged for security audit."
+    },
+    {
+      "id": "CF-003",
+      "title": "Login Flow — Release Notes v2.1",
+      "feature_area": "login",
+      "type": "release_notes",
+      "content": "Release v2.1 introduces biometric authentication support for iOS (Face ID, Touch ID) and Android (Fingerprint). The OTP screen was redesigned with a larger 6-box digit input and a visible countdown timer showing time remaining before OTP expiry. Session token TTL was extended from 15 minutes to 60 minutes on mobile following user feedback about frequent logouts. Accessibility improvements: ARIA labels added to the email and password inputs on the login form. Known issue: Face ID may fail silently after an iOS OS update — users should use their PIN as a fallback while this is investigated (tracked in PF-102)."
+    },
+    {
+      "id": "CF-004",
+      "title": "Payment Confirmation Flow — Functional Requirements",
+      "feature_area": "payments",
+      "type": "requirements",
+      "content": "The payment confirmation screen must display the recipient name, recipient account number (masked to last 4 digits), payment amount, fee breakdown, and estimated delivery time. The confirm payment button must be accessible via both touch tap and keyboard navigation. Confirmation must trigger a transaction record creation within 2 seconds. Users must be shown a success screen with a unique transaction reference ID within 3 seconds of confirmation. Payment confirmation must be idempotent — duplicate confirmations caused by network retries must not create duplicate transactions. This is enforced via idempotency keys on the backend."
+    },
+    {
+      "id": "CF-005",
+      "title": "Payment Release v2.4 — Known Issues and Release Blockers",
+      "feature_area": "payments",
+      "type": "release_notes",
+      "content": "Release v2.4 is currently blocked by two critical issues. First: PF-104 — the payment confirmation button is unresponsive on iOS 16 and iOS 17, preventing all iOS users from completing payments. Second: PF-105 — duplicate transactions are being created on network retry due to missing idempotency key enforcement. Engineering is implementing idempotency keys to resolve PF-105. The release is on hold until both blockers are resolved and a full regression test pass is completed. Estimated unblock window: Sprint 16. Release notes for v2.4 include: improved payment fee transparency, scheduled payment support, and multi-currency payment preview."
+    },
+    {
+      "id": "CF-006",
+      "title": "Card Management — Functional Requirements",
+      "feature_area": "cards",
+      "type": "requirements",
+      "content": "The card management screen must allow users to view all linked debit and credit cards, freeze and unfreeze individual cards, report a card as lost or stolen, generate single-use virtual card numbers for online purchases, and view card details (last 4 digits, expiry, card network). The freeze card action must take effect within 5 seconds of the user toggling the freeze switch. Frozen card status must persist across sessions and device reloads without requiring the user to re-authenticate. Virtual card numbers must expire after 24 hours by default, configurable to 1 hour for high-security transactions."
+    },
+    {
+      "id": "CF-007",
+      "title": "Freeze Card Feature — Process Flow",
+      "feature_area": "cards",
+      "type": "process_flow",
+      "content": "User taps the freeze card toggle on the card management screen. System sends a PATCH request to /api/v1/cards/{card_id}/freeze with the user's auth token. Backend updates the card status to 'frozen' in the card service database. Backend publishes a card_status_changed event to the notification service. The UI receives a success confirmation and dims the card visual with a snowflake icon to indicate frozen state. A push notification is sent to the user's registered device confirming the card is frozen. To unfreeze: user taps the same toggle — the process is identical in reverse. Important: Freezing a card does not affect recurring payments already authorized by the card network."
+    },
+    {
+      "id": "CF-008",
+      "title": "Dashboard — Functional Requirements",
+      "feature_area": "dashboard",
+      "type": "requirements",
+      "content": "The dashboard must display the user's primary account balance (with a show/hide balance toggle), the last 5 recent transactions, quick action buttons (Send Money, Request Money, Pay Bill), a notification badge showing unread count, and an account selector dropdown for multi-account users. The balance must refresh automatically every 60 seconds using a WebSocket connection. The quick actions panel must be rendered and accessible on all screen sizes including phone, tablet, and desktop. The dashboard must fully load within 2 seconds on a standard 4G connection."
+    },
+    {
+      "id": "CF-009",
+      "title": "Transaction History — Functional Requirements",
+      "feature_area": "transactions",
+      "type": "requirements",
+      "content": "The transaction history screen must display all transactions for the selected account, sorted by date with newest first as the default. Users must be able to filter transactions by date range, category (food, transport, utilities, etc.), and transaction type (debit or credit). The export feature must support PDF and CSV formats. Transactions must be paginated at 50 per page with infinite scroll or page controls. The search bar must support searching by recipient name, amount, and reference number. Transactions older than 7 years are archived and available on request via customer support."
+    },
+    {
+      "id": "CF-010",
+      "title": "PayFlow API Security Policy",
+      "feature_area": "general",
+      "type": "process_flow",
+      "content": "All PayFlow API endpoints require Bearer token authentication using OAuth 2.0. Tokens are issued via the authorization code flow with PKCE for mobile clients. API rate limits are enforced at 100 requests per minute per authenticated user. All payment and card mutation endpoints require an X-Idempotency-Key header to prevent duplicate operations. Sensitive fields including account numbers and card numbers must be masked in all API responses. All API requests and responses are logged for security audit with a 90-day retention policy. Failed authentication attempts are rate-limited and trigger alerts after 5 consecutive failures."
+    }
+  ]
+}

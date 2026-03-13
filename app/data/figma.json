@@ -1,0 +1,126 @@
+{
+  "screens": [
+    {
+      "id": "FG-001",
+      "screen_name": "Login Screen",
+      "feature_area": "login",
+      "components": [
+        "payflow_logo",
+        "email_input_field",
+        "password_input_field",
+        "login_button",
+        "biometric_login_button",
+        "forgot_password_link",
+        "sign_up_link"
+      ],
+      "design_notes": "The login screen uses a full-bleed gradient background (brand blue #1A3EDB to indigo #6B21D4). Email and password inputs have rounded corners (8px) with a subtle drop shadow. The biometric login button is secondary in visual hierarchy — smaller than the main login button, placed below it. The forgot password link is styled in small gray text below the password field. The sign up link is anchored at the bottom of the screen. Biometric button shows the relevant icon (Face ID or fingerprint) based on device capability detection."
+    },
+    {
+      "id": "FG-002",
+      "screen_name": "OTP Verification Screen",
+      "feature_area": "login",
+      "components": [
+        "otp_input_field",
+        "verify_button",
+        "resend_otp_link",
+        "countdown_timer",
+        "back_button",
+        "instructions_label"
+      ],
+      "design_notes": "The OTP screen displays a 6-box digit input component with automatic focus advance between boxes. Each box is a distinct bordered square input. A countdown timer shows the remaining time before OTP expiry (3-minute default). The resend OTP link is disabled and grayed out until the countdown expires. The screen was redesigned in v2.1 with larger box inputs (48x48px) for improved mobile usability. The instructions label shows the masked phone number or email where the OTP was sent."
+    },
+    {
+      "id": "FG-003",
+      "screen_name": "Dashboard Home Screen",
+      "feature_area": "dashboard",
+      "components": [
+        "balance_widget",
+        "balance_visibility_toggle",
+        "quick_actions_panel",
+        "send_money_button",
+        "request_money_button",
+        "pay_bill_button",
+        "recent_transactions_list",
+        "notification_badge",
+        "bottom_navigation_bar",
+        "account_selector_dropdown"
+      ],
+      "design_notes": "The balance widget is a large card at the top of the screen showing the primary account balance with a show/hide balance toggle (eye icon). The quick actions panel contains Send Money, Request Money, and Pay Bill as equal-weight icon-label buttons in a horizontal row. The recent transactions list shows the last 5 transactions with merchant category icon, merchant name, date, and amount. The notification badge overlays the bell icon in the top-right. The balance widget auto-refreshes every 60 seconds via WebSocket."
+    },
+    {
+      "id": "FG-004",
+      "screen_name": "Payment Entry Screen",
+      "feature_area": "payments",
+      "components": [
+        "recipient_search_input",
+        "recent_recipients_list",
+        "amount_input_field",
+        "currency_selector",
+        "payment_note_input",
+        "continue_button"
+      ],
+      "design_notes": "The recipient search input triggers a dropdown list of recent and saved recipients as the user types (minimum 2 characters). The amount field uses a large display font (32px) for easy reading. A currency selector dropdown defaults to the user's primary currency (GBP, USD, EUR supported). The payment note field is optional, limited to 100 characters, and labeled 'Add a note (optional)'. The continue button is disabled until a valid recipient and amount are entered. The screen title is 'Send Money'."
+    },
+    {
+      "id": "FG-005",
+      "screen_name": "Payment Confirmation Screen",
+      "feature_area": "payments",
+      "components": [
+        "recipient_summary_card",
+        "amount_display",
+        "fee_breakdown_section",
+        "estimated_delivery_label",
+        "confirm_payment_button",
+        "cancel_button",
+        "edit_payment_link"
+      ],
+      "design_notes": "The confirmation screen uses a summary card layout for reviewing payment details before submission. The confirm payment button is a full-width primary button in brand green (#16A34A). The cancel button is a text-only link positioned below the confirm button. The fee breakdown section is a collapsible accordion to reduce visual clutter — collapsed by default. The edit payment link returns the user to the payment entry screen. Known design issue: the confirm button tap target is undersized on iOS (tracked in PF-104, minimum 44x44px requirement not met)."
+    },
+    {
+      "id": "FG-006",
+      "screen_name": "Card Management Screen",
+      "feature_area": "cards",
+      "components": [
+        "card_list",
+        "freeze_card_toggle",
+        "card_frozen_indicator",
+        "report_lost_button",
+        "card_details_panel",
+        "virtual_card_button",
+        "add_card_button"
+      ],
+      "design_notes": "The card management screen displays each linked card as a visual card component with the last 4 digits and the card network logo (Visa, Mastercard). The freeze card toggle is a prominent toggle switch at the top of each card row — the most visible interactive element. When the freeze card toggle is activated, the card visual dims to 40% opacity and displays a snowflake icon overlay to clearly indicate frozen state. The report lost button is styled as a destructive action using a red outline button. The virtual card button generates a new single-use virtual card number. The add card button appears at the bottom of the list."
+    },
+    {
+      "id": "FG-007",
+      "screen_name": "Transaction History Screen",
+      "feature_area": "transactions",
+      "components": [
+        "transaction_list",
+        "date_range_filter",
+        "category_filter_dropdown",
+        "transaction_type_toggle",
+        "search_bar",
+        "export_button",
+        "pagination_controls"
+      ],
+      "design_notes": "The transaction history screen uses a grouped list view with sticky date section headers (Today, Yesterday, This Week, then specific dates). Each transaction row shows a merchant category icon, merchant name, short date, and amount (red for debits, green for credits). The filter bar collapses on scroll to maximize visible list space. The export button opens a bottom sheet modal with PDF and CSV format options. The search bar supports typeahead search by recipient name and reference number. The transaction type toggle switches between All, Debits, and Credits."
+    },
+    {
+      "id": "FG-008",
+      "screen_name": "Send Money — Review Screen",
+      "feature_area": "payments",
+      "components": [
+        "recipient_avatar",
+        "recipient_name_label",
+        "masked_account_number",
+        "payment_amount_label",
+        "payment_method_selector",
+        "scheduled_date_picker",
+        "send_now_button",
+        "schedule_button"
+      ],
+      "design_notes": "The review screen is the final step before reaching the payment confirmation screen. Users can choose between sending immediately (Send Now) or scheduling for a future date using the date picker. The payment method selector allows choosing between available linked bank accounts and debit cards. The send now button and schedule button are displayed as equal-weight side-by-side primary buttons. The recipient avatar shows the contact photo or a colored initial fallback. This screen was added in the v2.3 redesign to support scheduled payments."
+    }
+  ]
+}

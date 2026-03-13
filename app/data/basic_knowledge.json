@@ -1,0 +1,40 @@
+{
+  "entries": [
+    {
+      "id": "BK-001",
+      "topic": "PayFlow Product Vision",
+      "content": "PayFlow is a fintech application designed for individual consumers and small business owners who need a simple, unified tool for managing payments, cards, and financial activity. The core product vision is to make financial management invisible — users should be able to send money, check their balance, manage their cards, and review transactions without friction. PayFlow competes in the digital payments and neobank space. The guiding design principle is: any financial action in three taps or fewer.",
+      "tags": ["product", "vision", "overview", "fintech", "payflow"]
+    },
+    {
+      "id": "BK-002",
+      "topic": "PayFlow Team Structure",
+      "content": "The PayFlow engineering team is organized into four squads: (1) Payments Squad — owns the payment flow, payment confirmation, and transaction processing; (2) Identity Squad — owns login, authentication, OTP, biometric, and session management; (3) Cards Squad — owns card management, freeze card, report lost, and virtual cards; (4) Platform Squad — owns the dashboard, infrastructure, shared services, and the data pipeline. Each squad runs two-week sprints with a squad lead, 2-3 engineers, and an embedded QA engineer.",
+      "tags": ["team", "squad", "organization", "structure", "engineering"]
+    },
+    {
+      "id": "BK-003",
+      "topic": "PayFlow Release Process",
+      "content": "PayFlow follows a bi-weekly release cycle. Releases are versioned as Major.Minor.Patch (e.g., v2.4.0). A release enters 'blocked' status when one or more critical or high-priority bugs remain unresolved at the release cut date. Blocked releases are held until all blockers are resolved, a full regression test pass is completed, and the release is re-approved by the squad lead and QA lead. Release notes are published to Confluence and distributed to all stakeholders via email. Hotfix releases follow a fast-track process and are versioned as Patch increments (e.g., v2.3.1).",
+      "tags": ["release", "process", "versioning", "deployment", "blocked"]
+    },
+    {
+      "id": "BK-004",
+      "topic": "PayFlow Feature Areas",
+      "content": "PayFlow is organized into five core feature areas: (1) Login — email/password authentication, biometric login, OTP verification, session management, and account lockout; (2) Dashboard — the main home screen showing balance, quick actions (Send, Request, Pay Bill), recent activity, and notifications; (3) Payments — the full payment flow from recipient selection through confirmation, payment history, and scheduled payments; (4) Card Management — viewing linked cards, freeze and unfreeze, report lost or stolen, and virtual card generation; (5) Transaction History — the complete transaction log with date and category filtering, search, and PDF/CSV export.",
+      "tags": ["features", "areas", "login", "dashboard", "payments", "cards", "transactions"]
+    },
+    {
+      "id": "BK-005",
+      "topic": "PayFlow Technology Stack",
+      "content": "PayFlow's frontend is built with React Native for iOS and Android, and a React web app. The backend consists of microservices written in Node.js deployed on AWS ECS. Key services: Payment Service (handles payment initiation and confirmation), Card Service (manages card state, freeze, and virtual cards), Identity Service (handles auth, tokens, and OTP), and Notification Service (push, email, SMS). Mobile apps communicate via REST APIs over HTTPS. WebSockets are used for real-time balance updates on the dashboard. All services use PostgreSQL for persistent storage and Redis for caching and session tokens.",
+      "tags": ["technology", "stack", "tech", "architecture", "backend", "frontend", "react", "nodejs"]
+    },
+    {
+      "id": "BK-006",
+      "topic": "PayFlow Testing and Quality Standards",
+      "content": "PayFlow follows a shift-left testing approach with QA engineers embedded in each squad. All new features require unit tests (minimum 80% code coverage), integration tests for API endpoints, and a manual QA sign-off before merging to main. Regression testing is conducted at the end of each sprint covering all five feature areas. Performance testing is required before any major release. Accessibility testing is mandatory for all UI changes — PayFlow targets WCAG 2.1 AA compliance. The QA team uses Promptfoo for evaluating AI-assisted features and LLM-based system behaviors.",
+      "tags": ["testing", "quality", "qa", "standards", "sdet", "promptfoo", "regression", "accessibility"]
+    }
+  ]
+}
