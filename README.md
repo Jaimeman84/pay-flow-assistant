@@ -34,10 +34,10 @@ Built for: QA engineers, SDETs, instructors, and developers learning GenAI testi
 
 ```bash
 git clone <repo-url>
-cd pay-flow
+cd pay-flow-assistant
 
 # Create and activate a virtual environment
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate      # macOS / Linux
 venv\Scripts\activate         # Windows
 
@@ -65,6 +65,7 @@ LLM_MODEL=claude-3-5-haiku-20241022
 ### 3. Start the FastAPI server
 
 ```bash
+# Make sure venv is active, then run:
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
@@ -186,10 +187,10 @@ Try these to explore different routing paths. The full list is at `/questions` i
 
 ```bash
 # From the project root with the venv active
-python -m pytest tests/ -v
+python3 -m pytest tests/ -v
 ```
 
-> Run tests via `python -m pytest` (with venv active) rather than plain `pytest` to avoid conflicts with globally installed packages (e.g. `deepeval` registers a broken pytest plugin in some environments).
+> Run tests via `python3 -m pytest` (with venv active) rather than plain `pytest` to avoid conflicts with globally installed packages (e.g. `deepeval` registers a broken pytest plugin in some environments).
 
 The test suite covers:
 
@@ -280,7 +281,7 @@ Next.js UI (ui/)
 ## Project Structure
 
 ```
-pay-flow/
+pay-flow-assistant/
 ├── app/
 │   ├── main.py                    # FastAPI entry point — loads .env, configures CORS
 │   ├── api/
@@ -408,7 +409,7 @@ A globally installed package (e.g. `deepeval`) may be registering a broken pytes
 ```bash
 source venv/bin/activate      # macOS / Linux
 venv\Scripts\activate         # Windows
-python -m pytest tests/ -v
+python3 -m pytest tests/ -v
 ```
 
 **Promptfoo assertions fail with `Cannot read properties of undefined`**
