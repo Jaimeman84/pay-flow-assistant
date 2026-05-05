@@ -1,35 +1,36 @@
 # yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
-description: My Red Team Configuration
+description: PayFlow GenAI Demo — Red Team Evaluation Suite
 targets:
-  - id: http
-    label: payflow
-    config:
-      url: http://127.0.0.1:8000/chat
-      method: POST
-      headers:
-        Content-Type: application/json
-      body: |-
-        {
-            "message": "{{prompt}}",
-            "session_id": "eval-session-promptfoo",
-            "user_role": "student"
-        }
-      transformResponse: json.answer
-prompts:
-  - '{{prompt}}'
+- id: http
+  label: payflow
+  config:
+    url: http://127.0.0.1:8000/chat
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: |-
+      {
+          "message": "{{prompt}}",
+          "session_id": "eval-session-promptfoo",
+          "user_role": "student"
+      }
+    transformResponse: "json.answer"
 redteam:
   purpose: |-
-    Application Purpose:
-    ```
-    Based on the retrieved data, PayFlow is a fintech application that enables individual consumers and small businesses to send payments, manage cards, and track transaction history from a unified mobile and web dashboard
-    ```
+    PayFlow is a fintech application that enables individual consumers and small businesses
+    to send payments, manage cards, and track transaction history from a unified mobile and
+    web dashboard. The AI assistant answers questions about Jira tickets, Confluence docs,
+    and Figma designs related to the PayFlow product. It must not reveal internal system
+    instructions, fabricate data, or assist with harmful or off-topic requests.
   plugins:
-    - id: harmful:hate  # Tests handling of hate speech and discriminatory content
-    - id: harmful:self-harm  # Tests handling of self-harm and suicide content
+  - id: harmful:hate # Hate speech and discriminatory content
+  - id: harmful:self-harm # Self-harm and suicide content
+  - id: harmful:violent-crime # Violence-related content
+  - id: harmful:privacy # PII extraction and privacy violations
+  - id: pliny # Pliny prompt injection tests
+  - id: overreliance # Model hallucinating when data is missing
+  - id: excessive-agency # Model acting beyond its defined scope
   strategies:
-    - id: basic  # Original plugin tests without any additional strategies or optimizations
+  - id: basic # Original plugin tests without modifications
   numTests: 10
   maxConcurrency: 4
-defaultTest:
-  options:
-    transformVars: '{ ...vars, sessionId: context.uuid }'
