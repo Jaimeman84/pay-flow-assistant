@@ -78,6 +78,8 @@ WARNING  LLM synthesis DISABLED — LLM_API_KEY not set, using template fallback
 
 ### 4. Start the UI (optional)
 
+> **Important:** All UI commands must be run from inside the `ui/` folder. Running `npm run dev` from the project root will fail with a Tailwind/webpack resolve error.
+
 ```bash
 cd ui
 npm install
@@ -414,6 +416,14 @@ python -m pytest tests/ -v
 **Promptfoo assertions fail with `Cannot read properties of undefined`**
 
 Check that `promptfooconfig.yaml` has `transformResponse: "json"` (not `"json.answer"`). The full response object must be set as `output` for field-level assertions to work.
+
+**`Can't resolve 'tailwindcss'` when starting the UI**
+
+The Next.js/webpack build is being run from the project root instead of `ui/`. Always `cd ui` first:
+```bash
+cd ui
+npm run dev
+```
 
 **UI can't reach the API (`ECONNREFUSED`)**
 
