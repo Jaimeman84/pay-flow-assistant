@@ -65,8 +65,24 @@ def _run_pipeline(
 ) -> ChatResponse:
     """Internal pipeline execution — may raise; caller handles exceptions."""
 
+    # ── Resolve effective message ────────────────────────────────────────────
+    # Handles three forms:
+    #   message: str          → use directly
+    #   message: List[dict]   → extract last user turn (promptfoo body-template path)
+    #   messages: List[dict]  → extract last user turn (dedicated multi-turn field)
+    turns = request.messages or (request.message if isinstance(request.message, list) else None)
+    if turns:
+        last_user = next(
+            (m.content for m in reversed(turns) if m.role == "user"),
+            None,
+        )
+        effective_message = last_user or ""
+        steps.append(f"Multi-turn input: extracted last user turn ({len(turns)} turns total)")
+    else:
+        effective_message = request.message
+
     # ── Step 1: Guard check ──────────────────────────────────────────────────
-    guard_result = guard.check_message(request.message)
+    guard_result = guard.check_message(effective_message)
 
     step_label = f"Guard check: {guard_result.status}"
     if guard_result.reason:
@@ -88,7 +104,7 @@ def _run_pipeline(
         )
 
     # ── Step 2: Orchestrator — routing and task building ─────────────────────
-    routing = orchestrator.route(request.message)
+    routing = orchestrator.route(effective_message)
 
     steps.append(f"Orchestrator decision: {routing.orchestrator_decision}")
     steps.append(f"Routing to specialists: {', '.join(routing.selected_specialists)}")
@@ -105,7 +121,7 @@ def _run_pipeline(
 
     # ── Step 3: Specialist retrieval ─────────────────────────────────────────
     task = RetrievalTask(
-        message=request.message,
+        message=effective_message,
         feature_area=routing.feature_area,
         keywords=routing.keywords,
     )
@@ -130,7 +146,7 @@ def _run_pipeline(
             steps.append(f"{name.capitalize()} specialist: error — skipped")
 
     # ── Step 4: Synthesis ────────────────────────────────────────────────────
-    answer = synthesizer.synthesize(request.message, routing.task_description, all_results)
+    answer = synthesizer.synthesize(effective_message, routing.task_description, all_results)
     steps.append("Answer synthesized")
 
     # ── Step 5: Build response ───────────────────────────────────────────────
